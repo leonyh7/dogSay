@@ -37,6 +37,7 @@ var reactDemo2 = React.createClass({
         barTintColor="white"
         style={{ backgroundColor: '#F5FCFF' }}>
         <Icon.TabBarItem
+          title="list"
           iconName="ios-videocam-outline"
           selectedIconName="ios-videocam"
           selected={this.state.selectedTab === 'list'}
@@ -45,9 +46,10 @@ var reactDemo2 = React.createClass({
               selectedTab: 'list',
             });
           }}>
-          <List />
+          <List style={styles.tabContent}></List>
         </Icon.TabBarItem>
         <Icon.TabBarItem
+          title="edit"
           iconName="ios-recording-outline"
           selectedIconName="ios-recording"
           selected={this.state.selectedTab === 'edit'}
@@ -56,9 +58,10 @@ var reactDemo2 = React.createClass({
               selectedTab: 'edit',
             });
           }}>
-          <Edit />
+          <Edit></Edit>
         </Icon.TabBarItem>
         <Icon.TabBarItem
+          title="accout"
           iconName="ios-more-outline"
           selectedIconName="ios-more"
           selected={this.state.selectedTab === 'account'}
@@ -67,7 +70,7 @@ var reactDemo2 = React.createClass({
               selectedTab: 'account',
             });
           }}>
-          <Account />
+          <Account></Account>
         </Icon.TabBarItem>
       </TabBarIOS>
     );
@@ -76,19 +79,11 @@ var reactDemo2 = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
   tabContent: {
     flex: 1,
     alignItems: 'center',
-  },
-  tabText: {
-    margin: 50,
-  },
+  }
 });
 
 AppRegistry.registerComponent('reactDemo2', () => reactDemo2);
+

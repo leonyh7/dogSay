@@ -24,19 +24,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-
-  header: {
-    paddingTop: 25,
-    paddingBottom: 12,
-    backgroundColor: '#F5FCFF'
-  },
-
-  headerTitle: {
-    color: '#FFF',
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: '600'
   }
 });
 
