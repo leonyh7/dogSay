@@ -4,6 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
   AppRegistry,
+  NavigatorIOS,
   StyleSheet,
   TabBarIOS,
   Text,
@@ -46,7 +47,17 @@ var reactDemo2 = React.createClass({
               selectedTab: 'list',
             });
           }}>
-          <List style={styles.tabContent}></List>
+          <NavigatorIOS
+            initialRoute={{
+              title: '列表页面',
+              component: List            
+            }}
+            style={{ flex: 1 }}
+            barTintColor='#05a5d1'
+            titleTextColor='#fff'
+            shadowHidden={true}
+            //navigationBarHidden={true}
+          />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="edit"
@@ -76,13 +87,6 @@ var reactDemo2 = React.createClass({
     );
   },
 
-});
-
-var styles = StyleSheet.create({
-  tabContent: {
-    flex: 1,
-    alignItems: 'center',
-  }
 });
 
 AppRegistry.registerComponent('reactDemo2', () => reactDemo2);

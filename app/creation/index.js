@@ -2,8 +2,9 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  AppRegistry,
   ActivityIndicator,
+  AlertIOS,
+  AppRegistry,
   Dimensions,
   Image,
   ListView,
@@ -15,6 +16,7 @@ var {
 } = ReactNative;
 
 import Icon from 'react-native-vector-icons/Ionicons'
+var Detail = require('./detail.js')
 
 var request = require('../common/request')
 var config = require('../common/config')
@@ -27,21 +29,43 @@ var cachedResults = {
   items: [],
   total: 0
 }
-
-var List = React.createClass({
+var Item = React.createClass({
   getInitialState() {
-    var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    var row = this.props.row
     return {
-      dataSource: ds.cloneWithRows([]),
-      isLoadingTail: false,
-      page: 1,
-      isRefreshing: false,
-      init: false
-    };
+      up: row.up,
+      row: row
+    }
   },
-  renderRow(row) {
+  _up() {
+    var up = !this.state.up
+    var id = this.state.row._id
+    var url = config.host + config.api.up
+
+    var body = {
+      id,
+      up,
+      accessToken: '11',
+    }
+
+    request.post(url, body)
+      .then((data) => {
+        if (data && data.success) {
+          this.setState({
+            up
+          })
+        } else {
+          AlertIOS.alert('点赞失败！稍后重试')
+        }
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+  },
+  render() {
+    var row = this.state.row
     return (
-      <TouchableHighlight>
+      <TouchableHighlight onPress={this.props.onSelect}>
         <View style={styles.item}>
           <Text style={styles.title}>{row.title}</Text>
           <Image source={{ uri: row.thumb }} style={styles.thumb}>
@@ -50,11 +74,11 @@ var List = React.createClass({
           <View style={styles.itemFooter}>
             <View style={styles.handelBox}>
               <Icon
-                name='ios-heart-outline'
+                name={this.state.up ? 'ios-heart' : 'ios-heart-outline'}
                 size={28}
-                style={styles.up}
+                style={this.state.up ? styles.up : styles.down}
               ></Icon>
-              <Text style={styles.handelText}>喜欢</Text>
+              <Text style={styles.handelText} onPress={this._up}>喜欢</Text>
             </View>
             <View style={styles.handelBox}>
               <Icon
@@ -67,6 +91,24 @@ var List = React.createClass({
           </View>
         </View>
       </TouchableHighlight>
+    )
+  }
+})
+
+var List = React.createClass({
+  getInitialState() {
+    var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    return {
+      dataSource: ds.cloneWithRows([]),
+      isLoadingTail: false,
+      page: 1,
+      isRefreshing: false,
+      init: false
+    };
+  },
+  _renderRow(row) {
+    return (
+      <Item key={row.id} onSelect={()=>this._loadPage(row)} row={row}></Item>
     );
   },
   componentDidMount() {
@@ -165,18 +207,21 @@ var List = React.createClass({
   _hasMore() {
     return cachedResults.items.length !== cachedResults.total
   },
+  _loadPage(){
+    this.props.navigator.push({
+      name: 'detail',
+      component: Detail
+    })
+  },
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>列表页面</Text>
-        </View>
         <ListView
           automaticallyAdjustContentInsets={false}
           dataSource={this.state.dataSource}
           enableEmptySections={true}
           onEndReached={this._fetchMoreData}
-          onEndReachedThreshold={20}
+          onEndReachedThreshold={68}
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
@@ -186,7 +231,7 @@ var List = React.createClass({
             />
           }
           renderFooter={this._renderFooter}
-          renderRow={this.renderRow}
+          renderRow={this._renderRow}
           showsVerticalScrollIndicator={false}
         ></ListView>
       </View>
@@ -199,12 +244,11 @@ var styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
+    paddingTop: 65,
+    paddingBottom: 48
   },
   header: {
-    paddingTop: 25,
-    paddingBottom: 12,
-    // backgroundColor: '#EE735C'
     backgroundColor: '#05a5d1'
   },
   headerTitle: {
@@ -255,9 +299,13 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff'
   },
-  up: {
+  down: {
     fontSize: 22,
     color: '#333'
+  },
+  up: {
+    fontSize: 22,
+    color: '#ed7b66'
   },
   handelText: {
     paddingLeft: 12,
