@@ -50,11 +50,12 @@ var reactDemo2 = React.createClass({
           <NavigatorIOS
             initialRoute={{
               title: '列表页面',
-              component: List            
+              component: List
             }}
             style={{ flex: 1 }}
             barTintColor='#05a5d1'
             titleTextColor='#fff'
+            tintColor='#fff'
             shadowHidden={true}
             //navigationBarHidden={true}
           />

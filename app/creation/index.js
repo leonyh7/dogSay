@@ -207,10 +207,11 @@ var List = React.createClass({
   _hasMore() {
     return cachedResults.items.length !== cachedResults.total
   },
-  _loadPage(){
+  _loadPage(row){
     this.props.navigator.push({
-      name: 'detail',
-      component: Detail
+      title: row.title,
+      component: Detail,
+      passProps: { data: row }
     })
   },
   render() {
