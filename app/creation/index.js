@@ -58,7 +58,7 @@ var Item = React.createClass({
           AlertIOS.alert('点赞失败！稍后重试')
         }
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.log(error)
       })
   },
@@ -108,7 +108,7 @@ var List = React.createClass({
   },
   _renderRow(row) {
     return (
-      <Item key={row.id} onSelect={()=>this._loadPage(row)} row={row}></Item>
+      <Item key={row.id} onSelect={() => this._loadPage(row)} row={row}></Item>
     );
   },
   componentDidMount() {
@@ -207,7 +207,7 @@ var List = React.createClass({
   _hasMore() {
     return cachedResults.items.length !== cachedResults.total
   },
-  _loadPage(row){
+  _loadPage(row) {
     this.props.navigator.push({
       title: row.title,
       component: Detail,
@@ -222,7 +222,7 @@ var List = React.createClass({
           dataSource={this.state.dataSource}
           enableEmptySections={true}
           onEndReached={this._fetchMoreData}
-          onEndReachedThreshold={68}
+          onEndReachedThreshold={20}
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
@@ -233,8 +233,8 @@ var List = React.createClass({
           }
           renderFooter={this._renderFooter}
           renderRow={this._renderRow}
-          showsVerticalScrollIndicator={false}
-        ></ListView>
+          showsVerticalScrollIndicator={false}>
+        </ListView>
       </View>
     )
   }
@@ -246,7 +246,7 @@ var styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    paddingTop: 65,
+    paddingTop: 64,
     paddingBottom: 48
   },
   header: {

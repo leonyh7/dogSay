@@ -1,8 +1,9 @@
 var config = {
     host: 'http://rapapi.org/mockjs/20782',
     api: {
-        creations: '/api/getCreations',
-        up: '/api/up'
+        creations: '/api/creations',
+        up: '/api/up',
+        comment: '/api/comments'
     },
     header: {
         method: 'POST',
