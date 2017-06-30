@@ -50,7 +50,8 @@ var reactDemo2 = React.createClass({
           <NavigatorIOS
             initialRoute={{
               title: '列表页面',
-              component: List
+              component: List,
+              backButtonTitle: '返回'
             }}
             style={{ flex: 1 }}
             barTintColor='#05a5d1'

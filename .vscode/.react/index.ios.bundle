@@ -1256,8 +1256,8 @@ var AppRegistry = ReactNative.AppRegistry,
 var Icon = require(417                                 ); // 417 = react-native-vector-icons/Ionicons
 
 var List = require(587                   ); // 587 = ./app/creation/index
-var Edit = require(597               ); // 597 = ./app/edge/index
-var Account = require(598                  ); // 598 = ./app/account/index
+var Edit = require(599               ); // 599 = ./app/edge/index
+var Account = require(600                  ); // 600 = ./app/account/index
 
 var reactDemo2 = React.createClass({
   statics: {
@@ -1306,7 +1306,8 @@ var reactDemo2 = React.createClass({
         React.createElement(NavigatorIOS, {
           initialRoute: {
             title: '列表页面',
-            component: List
+            component: List,
+            backButtonTitle: '返回'
           },
           style: { flex: 1 },
           barTintColor: '#05a5d1',
@@ -1332,13 +1333,13 @@ var reactDemo2 = React.createClass({
             });
           }, __source: {
             fileName: _jsxFileName,
-            lineNumber: 63
+            lineNumber: 64
           }
         },
         React.createElement(Edit, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 73
+            lineNumber: 74
           }
         })
       ),
@@ -1355,13 +1356,13 @@ var reactDemo2 = React.createClass({
             });
           }, __source: {
             fileName: _jsxFileName,
-            lineNumber: 75
+            lineNumber: 76
           }
         },
         React.createElement(Account, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 85
+            lineNumber: 86
           }
         })
       )
@@ -52519,8 +52520,8 @@ var ActivityIndicator = ReactNative.ActivityIndicator,
 
 var Detail = require(588          ); // 588 = ./detail.js
 
-var request = require(592                ); // 592 = ../common/request
-var config = require(596               ); // 596 = ../common/config
+var request = require(594                ); // 594 = ../common/request
+var config = require(598               ); // 598 = ../common/config
 
 var width = Dimensions.get('window').width;
 
@@ -52723,19 +52724,17 @@ var List = React.createClass({
         cachedResults.items = items;
         cachedResults.total = data.total;
 
-        setTimeout(function () {
-          if (page !== 0) {
-            _this3.setState({
-              dataSource: _this3.state.dataSource.cloneWithRows(cachedResults.items),
-              isLoadingTail: false
-            });
-          } else {
-            _this3.setState({
-              dataSource: _this3.state.dataSource.cloneWithRows(cachedResults.items),
-              isRefreshing: false
-            });
-          }
-        }, 500);
+        if (page !== 0) {
+          _this3.setState({
+            dataSource: _this3.state.dataSource.cloneWithRows(cachedResults.items),
+            isLoadingTail: false
+          });
+        } else {
+          _this3.setState({
+            dataSource: _this3.state.dataSource.cloneWithRows(cachedResults.items),
+            isRefreshing: false
+          });
+        }
       }
     }).catch(function (error) {
       if (page !== 0) {
@@ -52768,19 +52767,19 @@ var List = React.createClass({
     this._fetchData(0);
   },
   _renderFooter: function _renderFooter() {
-    if (this._hasMore() && cachedResults.total != 0) {
+    if (!this._hasMore() && cachedResults.total != 0) {
       return React.createElement(
         View,
         { style: styles.loadingMore, __source: {
             fileName: _jsxFileName,
-            lineNumber: 192
+            lineNumber: 190
           }
         },
         React.createElement(
           Text,
           { style: styles.loadingText, __source: {
               fileName: _jsxFileName,
-              lineNumber: 193
+              lineNumber: 191
             }
           },
           '\u6CA1\u6709\u66F4\u591A\u4E86'
@@ -52791,13 +52790,13 @@ var List = React.createClass({
       return React.createElement(View, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 199
+          lineNumber: 197
         }
       });
     }
     return React.createElement(ActivityIndicator, { style: styles.loadingMore, __source: {
         fileName: _jsxFileName,
-        lineNumber: 203
+        lineNumber: 201
       }
     });
   },
@@ -52816,7 +52815,7 @@ var List = React.createClass({
       View,
       { style: styles.container, __source: {
           fileName: _jsxFileName,
-          lineNumber: 219
+          lineNumber: 217
         }
       },
       React.createElement(ListView, {
@@ -52824,7 +52823,7 @@ var List = React.createClass({
         dataSource: this.state.dataSource,
         enableEmptySections: true,
         onEndReached: this._fetchMoreData,
-        onEndReachedThreshold: 68,
+        onEndReachedThreshold: 20,
         refreshControl: React.createElement(RefreshControl, {
           refreshing: this.state.isRefreshing,
           onRefresh: this._onRefresh,
@@ -52832,14 +52831,14 @@ var List = React.createClass({
           title: '\u62FC\u547D\u52A0\u8F7D\u4E2D...',
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 227
+            lineNumber: 225
           }
         }),
         renderFooter: this._renderFooter,
         renderRow: this._renderRow,
         showsVerticalScrollIndicator: false, __source: {
           fileName: _jsxFileName,
-          lineNumber: 220
+          lineNumber: 218
         }
       })
     );
@@ -52851,7 +52850,7 @@ var styles = StyleSheet.create({
     flex: 1,
 
     backgroundColor: '#F5FCFF',
-    paddingTop: 65,
+    paddingTop: 64,
     paddingBottom: 48
   },
   header: {
@@ -52934,29 +52933,28 @@ var styles = StyleSheet.create({
 module.exports = List;
 }, 587, null, "reactDemo2/app/creation/index.js");
 __d(/* reactDemo2/app/creation/detail.js */function(global, require, module, exports) {var _jsxFileName = '/Users/leo/work/reactDemo2/app/creation/detail.js';
-
-var _Ionicons = require(417                                 ); // 417 = react-native-vector-icons/Ionicons
-
-var _Ionicons2 = babelHelpers.interopRequireDefault(_Ionicons);
-
 var React = require(12     ); // 12 = react
 var ReactNative = require(45            ); // 45 = react-native
 var ActivityIndicator = ReactNative.ActivityIndicator,
+    AlertIOS = ReactNative.AlertIOS,
     Dimensions = ReactNative.Dimensions,
     ListView = ReactNative.ListView,
     Image = ReactNative.Image,
-    ScrollView = ReactNative.ScrollView,
+    Modal = ReactNative.Modal,
     StyleSheet = ReactNative.StyleSheet,
     Text = ReactNative.Text,
+    TextInput = ReactNative.TextInput,
     TouchableOpacity = ReactNative.TouchableOpacity,
     View = ReactNative.View;
 
+var Icon = require(417                                 ).default; // 417 = react-native-vector-icons/Ionicons
+var Video = require(589                 ).default; // 589 = react-native-video
+var Button = require(592                  ).default; // 592 = react-native-button
 
-var request = require(592                ); // 592 = ../common/request
-var config = require(596               ); // 596 = ../common/config
+var request = require(594                ); // 594 = ../common/request
+var config = require(598               ); // 598 = ../common/config
 
 var width = Dimensions.get('window').width;
-var Video = require(589                 ).default; // 589 = react-native-video
 
 var cachedResults = {
   nextPage: 1,
@@ -52988,10 +52986,15 @@ var Detail = React.createClass({
       videoProgress: 0.01,
       currentTime: 0,
       paused: false,
-      videoOk: true
+      videoOk: true,
+
+      content: '',
+
+      animationType: 'none',
+      modalVisible: false,
+      isSending: false
     };
   },
-  _onLoadStart: function _onLoadStart() {},
   _onLoad: function _onLoad() {
     this.setState({
       videoLoaded: true,
@@ -53048,6 +53051,7 @@ var Detail = React.createClass({
     }
     request.get(config.host + config.api.comment, {
       accessToken: 'aa',
+      creation: '11',
       page: page
     }).then(function (data) {
       if (data.success) {
@@ -53056,7 +53060,6 @@ var Detail = React.createClass({
         cachedResults.nextPage += 1;
         cachedResults.items = items;
         cachedResults.total = data.total;
-
         _this.setState({
           dataSource: _this.state.dataSource.cloneWithRows(cachedResults.items),
           isLoadingTail: false
@@ -53082,26 +53085,26 @@ var Detail = React.createClass({
       View,
       { key: row._id, style: styles.replyBox, __source: {
           fileName: _jsxFileName,
-          lineNumber: 144
+          lineNumber: 150
         }
       },
       React.createElement(Image, { style: styles.replyAvatar, source: { uri: row.replyBy.avatar }, __source: {
           fileName: _jsxFileName,
-          lineNumber: 145
+          lineNumber: 151
         }
       }),
       React.createElement(
         View,
         { style: styles.reply, __source: {
             fileName: _jsxFileName,
-            lineNumber: 146
+            lineNumber: 152
           }
         },
         React.createElement(
           Text,
           { style: styles.replyNickname, __source: {
               fileName: _jsxFileName,
-              lineNumber: 147
+              lineNumber: 153
             }
           },
           row.replyBy.nickname
@@ -53110,7 +53113,7 @@ var Detail = React.createClass({
           Text,
           { style: styles.relyContent, __source: {
               fileName: _jsxFileName,
-              lineNumber: 150
+              lineNumber: 156
             }
           },
           row.content
@@ -53128,49 +53131,158 @@ var Detail = React.createClass({
     this._fetchData(page);
   },
   _hasMore: function _hasMore() {
-    return cachedResults.items.length !== cachedResults.total;
+    return cachedResults.items.length < cachedResults.total;
+  },
+  _closeModal: function _closeModal() {
+    this._setModalVisible(false);
+  },
+  _focus: function _focus() {
+    this._setModalVisible(true);
+  },
+  _setModalVisible: function _setModalVisible(isVisible) {
+    this.setState({
+      modalVisible: isVisible
+    });
   },
   _renderHeader: function _renderHeader() {
     var data = this.state.data;
     return React.createElement(
       View,
-      { style: styles.infoBox, __source: {
+      { style: styles.listHeader, __source: {
           fileName: _jsxFileName,
-          lineNumber: 172
+          lineNumber: 190
         }
       },
-      React.createElement(Image, { style: styles.avatar, source: { uri: data.author.avatar }, __source: {
-          fileName: _jsxFileName,
-          lineNumber: 173
-        }
-      }),
       React.createElement(
         View,
-        { style: styles.descBox, __source: {
+        { style: styles.infoBox, __source: {
             fileName: _jsxFileName,
-            lineNumber: 174
+            lineNumber: 191
+          }
+        },
+        React.createElement(Image, { style: styles.avatar, source: { uri: data.author.avatar }, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 192
+          }
+        }),
+        React.createElement(
+          View,
+          { style: styles.descBox, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 193
+            }
+          },
+          React.createElement(
+            Text,
+            { style: styles.nickname, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 194
+              }
+            },
+            data.author.nickname
+          ),
+          React.createElement(
+            Text,
+            { style: styles.title, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 197
+              }
+            },
+            data.author.description
+          )
+        )
+      ),
+      React.createElement(
+        View,
+        { style: styles.commentBox, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 202
+          }
+        },
+        React.createElement(
+          View,
+          { style: styles.comment, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 203
+            }
+          },
+          React.createElement(TextInput, {
+            placeholder: '\u8BC4\u8BBA\u4E00\u4E0B...',
+            style: styles.content,
+            multiline: true,
+            onFocus: this._focus, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 204
+            }
+          })
+        )
+      ),
+      React.createElement(
+        View,
+        { style: styles.commentArea, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 211
           }
         },
         React.createElement(
           Text,
-          { style: styles.nickname, __source: {
+          { style: styles.commentTitle, __source: {
               fileName: _jsxFileName,
-              lineNumber: 175
+              lineNumber: 212
             }
           },
-          data.author.nickname
-        ),
-        React.createElement(
-          Text,
-          { style: styles.title, __source: {
-              fileName: _jsxFileName,
-              lineNumber: 178
-            }
-          },
-          data.author.description
+          '\u7CBE\u5F69\u8BC4\u8BBA'
         )
       )
     );
+  },
+  _submit: function _submit() {
+    var _this2 = this;
+
+    if (!this.state.content) {
+      return AlertIOS.alert('留言不能为空');
+    }
+    if (this.state.isSending) {
+      return AlertIOS.alert('正在评论中');
+    }
+    this.setState({
+      isSending: true
+    }, function () {
+      var body = {
+        accessToken: 'aa',
+        creation: '111',
+        content: _this2.state.content
+      };
+      var url = config.host + config.api.comment;
+      request.post(url, body).then(function (data) {
+        if (data && data.success) {
+          var items = cachedResults.items.slice();
+          items = [{
+            content: _this2.state.content,
+            replyBy: {
+              nickname: 'aaaa',
+              avatar: 'http://dummyimage.com/640x640/7ec994'
+            }
+          }].concat(items);
+          cachedResults.items = items;
+          cachedResults.total = cachedResults.total + 1;
+          _this2.setState({
+            isSending: false,
+            dataSource: _this2.state.dataSource.cloneWithRows(cachedResults.items)
+          });
+          _this2._setModalVisible(false);
+        }
+      }).catch(function (error) {
+        console.log(error);
+        _this2._setModalVisible(false);
+        AlertIOS.alert('留言失败，请稍后重试');
+      });
+    });
+  },
+  _input: function _input(text) {
+    this.setState({
+      content: text
+    });
   },
   _renderFooter: function _renderFooter() {
     if (!this._hasMore() && cachedResults.total != 0) {
@@ -53178,14 +53290,14 @@ var Detail = React.createClass({
         View,
         { style: styles.loadingMore, __source: {
             fileName: _jsxFileName,
-            lineNumber: 188
+            lineNumber: 268
           }
         },
         React.createElement(
           Text,
           { style: styles.loadingText, __source: {
               fileName: _jsxFileName,
-              lineNumber: 189
+              lineNumber: 269
             }
           },
           '\u6CA1\u6709\u66F4\u591A\u4E86'
@@ -53196,30 +53308,32 @@ var Detail = React.createClass({
       return React.createElement(View, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 195
+          lineNumber: 275
         }
       });
     }
     return React.createElement(ActivityIndicator, { style: styles.loadingMore, __source: {
         fileName: _jsxFileName,
-        lineNumber: 199
+        lineNumber: 279
       }
     });
   },
   render: function render() {
+    var _this3 = this;
+
     var data = this.props.data;
     return React.createElement(
       View,
       { style: styles.container, __source: {
           fileName: _jsxFileName,
-          lineNumber: 206
+          lineNumber: 286
         }
       },
       React.createElement(
         View,
         { style: styles.videoBox, __source: {
             fileName: _jsxFileName,
-            lineNumber: 207
+            lineNumber: 287
           }
         },
         React.createElement(Video, {
@@ -53239,31 +53353,31 @@ var Detail = React.createClass({
           onError: this._onError,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 208
+            lineNumber: 288
           }
         }),
         !this.state.videoOk && React.createElement(
           Text,
           { style: styles.failText, __source: {
               fileName: _jsxFileName,
-              lineNumber: 225
+              lineNumber: 305
             }
           },
           '\u89C6\u9891\u51FA\u9519\u4E86'
         ),
         !this.state.videoLoaded && React.createElement(ActivityIndicator, { color: '#ee735c', style: styles.loading, __source: {
             fileName: _jsxFileName,
-            lineNumber: 228
+            lineNumber: 308
           }
         }),
-        this.state.videoLoaded && !this.state.playing ? React.createElement(_Ionicons2.default, {
+        this.state.videoLoaded && !this.state.playing ? React.createElement(Icon, {
           onPress: this._replay,
           name: 'ios-play',
           size: 48,
           style: styles.playIcon,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 232
+            lineNumber: 312
           }
         }) : null,
         this.state.videoLoaded && this.state.playing ? React.createElement(
@@ -53271,15 +53385,15 @@ var Detail = React.createClass({
           {
             onPress: this._pause, style: styles.pauseBtn, __source: {
               fileName: _jsxFileName,
-              lineNumber: 241
+              lineNumber: 321
             }
           },
-          this.state.paused ? React.createElement(_Ionicons2.default, {
+          this.state.paused ? React.createElement(Icon, {
             name: 'ios-play',
             size: 48,
             style: styles.resumeIcon, __source: {
               fileName: _jsxFileName,
-              lineNumber: 245
+              lineNumber: 325
             }
           }) : null
         ) : null,
@@ -53287,33 +53401,93 @@ var Detail = React.createClass({
           View,
           { style: styles.progressBox, __source: {
               fileName: _jsxFileName,
-              lineNumber: 254
+              lineNumber: 334
             }
           },
           React.createElement(View, { style: [styles.progressBar, { width: width * this.state.videoProgress }], __source: {
               fileName: _jsxFileName,
-              lineNumber: 255
+              lineNumber: 335
             }
           })
         )
       ),
+      React.createElement(ListView, {
+        automaticallyAdjustContentInsets: false,
+        dataSource: this.state.dataSource,
+        enableEmptySections: true,
+        onEndReached: this._fetchMoreData,
+        onEndReachedThreshold: 20,
+        renderHeader: this._renderHeader,
+        renderFooter: this._renderFooter,
+        renderRow: this._renderRow,
+        showsVerticalScrollIndicator: false, __source: {
+          fileName: _jsxFileName,
+          lineNumber: 338
+        }
+      }),
       React.createElement(
-        ListView,
+        Modal,
         {
-          automaticallyAdjustContentInsets: false,
-          dataSource: this.state.dataSource,
-          enableEmptySections: true,
-          onEndReached: this._fetchMoreData,
-          onEndReachedThreshold: 68,
-          renderHeader: this._renderHeader,
-          renderFooter: this._renderFooter,
-          renderRow: this._renderRow,
-          showsVerticalScrollIndicator: false, __source: {
+          animationType: 'fade',
+          visible: this.state.modalVisible,
+          onRequestClose: function onRequestClose() {
+            _this3._setModalVisible(false);
+          }, __source: {
             fileName: _jsxFileName,
-            lineNumber: 258
+            lineNumber: 349
           }
         },
-        '>'
+        React.createElement(
+          View,
+          { style: styles.modalContainer, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 353
+            }
+          },
+          React.createElement(Icon, {
+            onPress: this._closeModal,
+            name: 'ios-close-outline',
+            style: styles.closeIcon, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 354
+            }
+          }),
+          React.createElement(
+            View,
+            { style: styles.commentBox, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 358
+              }
+            },
+            React.createElement(
+              View,
+              { style: styles.comment, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 359
+                }
+              },
+              React.createElement(TextInput, {
+                placeholder: '\u8BC4\u8BBA\u4E00\u4E0B...',
+                style: styles.content,
+                multiline: true,
+                defaultValue: this.state.content,
+                onChangeText: this._input, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 360
+                }
+              })
+            )
+          ),
+          React.createElement(
+            Button,
+            { style: styles.submitBtn, onPress: this._submit, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 368
+              }
+            },
+            '\u8BC4\u8BBA'
+          )
+        )
       )
     );
   }
@@ -53349,7 +53523,9 @@ var styles = StyleSheet.create({
   progressBox: {
     width: width,
     height: 2,
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
+    position: 'absolute',
+    bottom: 0
   },
   progressBar: {
     width: 1,
@@ -53455,20 +53631,613 @@ var styles = StyleSheet.create({
   loadingText: {
     color: '#777',
     textAlign: 'center'
+  },
+
+  commentBox: {
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 8,
+    width: width
+  },
+  content: {
+    paddingLeft: 5,
+    color: '#333',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
+    fontSize: 14,
+    height: 80
+  },
+  commentArea: {
+    width: width,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee'
+  },
+
+  modalContainer: {
+    flex: 1,
+    paddingTop: 45,
+    backgroundColor: '#fff',
+    alignItems: 'center'
+  },
+  closeIcon: {
+    alignSelf: 'center',
+    fontSize: 30,
+    lineHeight: 40,
+    color: '#05a5d1',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    textAlign: 'center'
+  },
+  submitBtn: {
+    width: width - 20,
+    padding: 16,
+    borderRadius: 4,
+    fontSize: 18,
+    color: '#fff',
+    backgroundColor: '#05a5d1',
+    overflow: 'hidden'
   }
 });
 
 module.exports = Detail;
 }, 588, null, "reactDemo2/app/creation/detail.js");
-__d(/* reactDemo2/app/common/request.js */function(global, require, module, exports) {var _queryString = require(593           ); // 593 = query-string
+__d(/* react-native-video/Video.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _jsxFileName = '/Users/leo/work/reactDemo2/node_modules/react-native-video/Video.js';
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var _resolveAssetSource = require(275                                              ); // 275 = react-native/Libraries/Image/resolveAssetSource
+
+var _resolveAssetSource2 = babelHelpers.interopRequireDefault(_resolveAssetSource);
+
+var _VideoResizeMode = require(590                   ); // 590 = ./VideoResizeMode.js
+
+var _VideoResizeMode2 = babelHelpers.interopRequireDefault(_VideoResizeMode);
+
+var styles = _reactNative.StyleSheet.create({
+  base: {
+    overflow: 'hidden'
+  }
+});
+
+var Video = function (_Component) {
+  babelHelpers.inherits(Video, _Component);
+
+  function Video(props) {
+    babelHelpers.classCallCheck(this, Video);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (Video.__proto__ || Object.getPrototypeOf(Video)).call(this, props));
+
+    _this.seek = function (time) {
+      _this.setNativeProps({ seek: time });
+    };
+
+    _this.presentFullscreenPlayer = function () {
+      _this.setNativeProps({ fullscreen: true });
+    };
+
+    _this.dismissFullscreenPlayer = function () {
+      _this.setNativeProps({ fullscreen: false });
+    };
+
+    _this._assignRoot = function (component) {
+      _this._root = component;
+    };
+
+    _this._onLoadStart = function (event) {
+      if (_this.props.onLoadStart) {
+        _this.props.onLoadStart(event.nativeEvent);
+      }
+    };
+
+    _this._onLoad = function (event) {
+      if (_this.props.onLoad) {
+        _this.props.onLoad(event.nativeEvent);
+      }
+    };
+
+    _this._onError = function (event) {
+      if (_this.props.onError) {
+        _this.props.onError(event.nativeEvent);
+      }
+    };
+
+    _this._onProgress = function (event) {
+      if (_this.props.onProgress) {
+        _this.props.onProgress(event.nativeEvent);
+      }
+    };
+
+    _this._onSeek = function (event) {
+      if (_this.state.showPoster) {
+        _this.setState({ showPoster: false });
+      }
+
+      if (_this.props.onSeek) {
+        _this.props.onSeek(event.nativeEvent);
+      }
+    };
+
+    _this._onEnd = function (event) {
+      if (_this.props.onEnd) {
+        _this.props.onEnd(event.nativeEvent);
+      }
+    };
+
+    _this._onFullscreenPlayerWillPresent = function (event) {
+      if (_this.props.onFullscreenPlayerWillPresent) {
+        _this.props.onFullscreenPlayerWillPresent(event.nativeEvent);
+      }
+    };
+
+    _this._onFullscreenPlayerDidPresent = function (event) {
+      if (_this.props.onFullscreenPlayerDidPresent) {
+        _this.props.onFullscreenPlayerDidPresent(event.nativeEvent);
+      }
+    };
+
+    _this._onFullscreenPlayerWillDismiss = function (event) {
+      if (_this.props.onFullscreenPlayerWillDismiss) {
+        _this.props.onFullscreenPlayerWillDismiss(event.nativeEvent);
+      }
+    };
+
+    _this._onFullscreenPlayerDidDismiss = function (event) {
+      if (_this.props.onFullscreenPlayerDidDismiss) {
+        _this.props.onFullscreenPlayerDidDismiss(event.nativeEvent);
+      }
+    };
+
+    _this._onReadyForDisplay = function (event) {
+      if (_this.props.onReadyForDisplay) {
+        _this.props.onReadyForDisplay(event.nativeEvent);
+      }
+    };
+
+    _this._onPlaybackStalled = function (event) {
+      if (_this.props.onPlaybackStalled) {
+        _this.props.onPlaybackStalled(event.nativeEvent);
+      }
+    };
+
+    _this._onPlaybackResume = function (event) {
+      if (_this.props.onPlaybackResume) {
+        _this.props.onPlaybackResume(event.nativeEvent);
+      }
+    };
+
+    _this._onPlaybackRateChange = function (event) {
+      if (_this.state.showPoster && event.nativeEvent.playbackRate !== 0) {
+        _this.setState({ showPoster: false });
+      }
+
+      if (_this.props.onPlaybackRateChange) {
+        _this.props.onPlaybackRateChange(event.nativeEvent);
+      }
+    };
+
+    _this._onAudioBecomingNoisy = function () {
+      if (_this.props.onAudioBecomingNoisy) {
+        _this.props.onAudioBecomingNoisy();
+      }
+    };
+
+    _this._onAudioFocusChanged = function (event) {
+      if (_this.props.onAudioFocusChanged) {
+        _this.props.onAudioFocusChanged(event.nativeEvent);
+      }
+    };
+
+    _this._onBuffer = function (event) {
+      if (_this.props.onBuffer) {
+        _this.props.onBuffer(event.nativeEvent);
+      }
+    };
+
+    _this.state = {
+      showPoster: true
+    };
+    return _this;
+  }
+
+  babelHelpers.createClass(Video, [{
+    key: 'setNativeProps',
+    value: function setNativeProps(nativeProps) {
+      this._root.setNativeProps(nativeProps);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var resizeMode = this.props.resizeMode;
+      var source = (0, _resolveAssetSource2.default)(this.props.source) || {};
+
+      var uri = source.uri || '';
+      if (uri && uri.match(/^\//)) {
+        uri = 'file://' + uri;
+      }
+
+      var isNetwork = !!(uri && uri.match(/^https?:/));
+      var isAsset = !!(uri && uri.match(/^(assets-library|file|content|ms-appx|ms-appdata):/));
+
+      var nativeResizeMode = void 0;
+      if (resizeMode === _VideoResizeMode2.default.stretch) {
+        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleToFill;
+      } else if (resizeMode === _VideoResizeMode2.default.contain) {
+        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleAspectFit;
+      } else if (resizeMode === _VideoResizeMode2.default.cover) {
+        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleAspectFill;
+      } else {
+        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleNone;
+      }
+
+      var nativeProps = babelHelpers.extends({}, this.props);
+      babelHelpers.extends(nativeProps, {
+        style: [styles.base, nativeProps.style],
+        resizeMode: nativeResizeMode,
+        src: {
+          uri: uri,
+          isNetwork: isNetwork,
+          isAsset: isAsset,
+          type: source.type || '',
+          mainVer: source.mainVer || 0,
+          patchVer: source.patchVer || 0
+        },
+        onVideoLoadStart: this._onLoadStart,
+        onVideoLoad: this._onLoad,
+        onVideoError: this._onError,
+        onVideoProgress: this._onProgress,
+        onVideoSeek: this._onSeek,
+        onVideoEnd: this._onEnd,
+        onVideoBuffer: this._onBuffer,
+        onVideoFullscreenPlayerWillPresent: this._onFullscreenPlayerWillPresent,
+        onVideoFullscreenPlayerDidPresent: this._onFullscreenPlayerDidPresent,
+        onVideoFullscreenPlayerWillDismiss: this._onFullscreenPlayerWillDismiss,
+        onVideoFullscreenPlayerDidDismiss: this._onFullscreenPlayerDidDismiss,
+        onReadyForDisplay: this._onReadyForDisplay,
+        onPlaybackStalled: this._onPlaybackStalled,
+        onPlaybackResume: this._onPlaybackResume,
+        onPlaybackRateChange: this._onPlaybackRateChange,
+        onAudioFocusChanged: this._onAudioFocusChanged,
+        onAudioBecomingNoisy: this._onAudioBecomingNoisy
+      });
+
+      if (this.props.poster && this.state.showPoster) {
+        var posterStyle = {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          resizeMode: 'contain'
+        };
+
+        return _react2.default.createElement(
+          _reactNative.View,
+          { style: nativeProps.style, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 217
+            }
+          },
+          _react2.default.createElement(RCTVideo, babelHelpers.extends({
+            ref: this._assignRoot
+          }, nativeProps, {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 218
+            }
+          })),
+          _react2.default.createElement(_reactNative.Image, {
+            style: posterStyle,
+            source: { uri: this.props.poster },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 222
+            }
+          })
+        );
+      }
+
+      return _react2.default.createElement(RCTVideo, babelHelpers.extends({
+        ref: this._assignRoot
+      }, nativeProps, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 231
+        }
+      }));
+    }
+  }]);
+  return Video;
+}(_react.Component);
+
+exports.default = Video;
+
+
+Video.propTypes = babelHelpers.extends({
+  src: _react.PropTypes.object,
+  seek: _react.PropTypes.number,
+  fullscreen: _react.PropTypes.bool,
+  onVideoLoadStart: _react.PropTypes.func,
+  onVideoLoad: _react.PropTypes.func,
+  onVideoBuffer: _react.PropTypes.func,
+  onVideoError: _react.PropTypes.func,
+  onVideoProgress: _react.PropTypes.func,
+  onVideoSeek: _react.PropTypes.func,
+  onVideoEnd: _react.PropTypes.func,
+  onVideoFullscreenPlayerWillPresent: _react.PropTypes.func,
+  onVideoFullscreenPlayerDidPresent: _react.PropTypes.func,
+  onVideoFullscreenPlayerWillDismiss: _react.PropTypes.func,
+  onVideoFullscreenPlayerDidDismiss: _react.PropTypes.func,
+
+  source: _react.PropTypes.oneOfType([_react.PropTypes.shape({
+    uri: _react.PropTypes.string
+  }), _react.PropTypes.number]),
+  resizeMode: _react.PropTypes.string,
+  poster: _react.PropTypes.string,
+  repeat: _react.PropTypes.bool,
+  paused: _react.PropTypes.bool,
+  muted: _react.PropTypes.bool,
+  volume: _react.PropTypes.number,
+  rate: _react.PropTypes.number,
+  playInBackground: _react.PropTypes.bool,
+  playWhenInactive: _react.PropTypes.bool,
+  disableFocus: _react.PropTypes.bool,
+  controls: _react.PropTypes.bool,
+  currentTime: _react.PropTypes.number,
+  progressUpdateInterval: _react.PropTypes.number,
+  onLoadStart: _react.PropTypes.func,
+  onLoad: _react.PropTypes.func,
+  onBuffer: _react.PropTypes.func,
+  onError: _react.PropTypes.func,
+  onProgress: _react.PropTypes.func,
+  onSeek: _react.PropTypes.func,
+  onEnd: _react.PropTypes.func,
+  onFullscreenPlayerWillPresent: _react.PropTypes.func,
+  onFullscreenPlayerDidPresent: _react.PropTypes.func,
+  onFullscreenPlayerWillDismiss: _react.PropTypes.func,
+  onFullscreenPlayerDidDismiss: _react.PropTypes.func,
+  onReadyForDisplay: _react.PropTypes.func,
+  onPlaybackStalled: _react.PropTypes.func,
+  onPlaybackResume: _react.PropTypes.func,
+  onPlaybackRateChange: _react.PropTypes.func,
+  onAudioFocusChanged: _react.PropTypes.func,
+  onAudioBecomingNoisy: _react.PropTypes.func,
+
+  scaleX: _react.PropTypes.number,
+  scaleY: _react.PropTypes.number,
+  translateX: _react.PropTypes.number,
+  translateY: _react.PropTypes.number,
+  rotation: _react.PropTypes.number
+}, _reactNative.View.propTypes);
+
+var RCTVideo = (0, _reactNative.requireNativeComponent)('RCTVideo', Video, {
+  nativeOnly: {
+    src: true,
+    seek: true,
+    fullscreen: true
+  }
+});
+}, 589, null, "react-native-video/Video.js");
+__d(/* react-native-video/VideoResizeMode.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keymirror = require(591        ); // 591 = keymirror
+
+var _keymirror2 = babelHelpers.interopRequireDefault(_keymirror);
+
+exports.default = (0, _keymirror2.default)({
+  contain: null,
+  cover: null,
+  stretch: null
+});
+}, 590, null, "react-native-video/VideoResizeMode.js");
+__d(/* keymirror/index.js */function(global, require, module, exports) {
+
+"use strict";
+
+var keyMirror = function keyMirror(obj) {
+  var ret = {};
+  var key;
+  if (!(obj instanceof Object && !Array.isArray(obj))) {
+    throw new Error('keyMirror(...): Argument must be an object.');
+  }
+  for (key in obj) {
+    if (!obj.hasOwnProperty(key)) {
+      continue;
+    }
+    ret[key] = key;
+  }
+  return ret;
+};
+
+module.exports = keyMirror;
+}, 591, null, "keymirror/index.js");
+__d(/* react-native-button/Button.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _jsxFileName = '/Users/leo/work/reactDemo2/node_modules/react-native-button/Button.js';
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var _coalesceNonElementChildren = require(593                           ); // 593 = ./coalesceNonElementChildren
+
+var _coalesceNonElementChildren2 = babelHelpers.interopRequireDefault(_coalesceNonElementChildren);
+
+var systemButtonOpacity = 0.2;
+
+var Button = function (_Component) {
+  babelHelpers.inherits(Button, _Component);
+
+  function Button() {
+    babelHelpers.classCallCheck(this, Button);
+    return babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Button, [{
+    key: 'render',
+    value: function render() {
+      var touchableProps = {
+        activeOpacity: this._computeActiveOpacity()
+      };
+      if (!this.props.disabled) {
+        touchableProps.onPress = this.props.onPress;
+        touchableProps.onPressIn = this.props.onPressIn;
+        touchableProps.onPressOut = this.props.onPressOut;
+        touchableProps.onLongPress = this.props.onLongPress;
+      }
+
+      return _react2.default.createElement(
+        _reactNative.TouchableOpacity,
+        babelHelpers.extends({}, touchableProps, {
+          testID: this.props.testID,
+          style: this.props.containerStyle,
+          accessibilityTraits: 'button',
+          accessibilityComponentType: 'button', __source: {
+            fileName: _jsxFileName,
+            lineNumber: 36
+          }
+        }),
+        this._renderGroupedChildren()
+      );
+    }
+  }, {
+    key: '_renderGroupedChildren',
+    value: function _renderGroupedChildren() {
+      var _this2 = this;
+
+      var disabled = this.props.disabled;
+
+      var style = [styles.text, disabled ? styles.disabledText : null, this.props.style, disabled ? this.props.styleDisabled : null];
+
+      var children = (0, _coalesceNonElementChildren2.default)(this.props.children, function (children, index) {
+        return _react2.default.createElement(
+          _reactNative.Text,
+          { key: index, style: style, allowFontScaling: _this2.props.allowFontScaling, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 58
+            }
+          },
+          children
+        );
+      });
+
+      switch (children.length) {
+        case 0:
+          return null;
+        case 1:
+          return children[0];
+        default:
+          return _react2.default.createElement(
+            _reactNative.View,
+            { style: styles.group, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 70
+              }
+            },
+            children
+          );
+      }
+    }
+  }, {
+    key: '_computeActiveOpacity',
+    value: function _computeActiveOpacity() {
+      if (this.props.disabled) {
+        return 1;
+      }
+      return this.props.activeOpacity != null ? this.props.activeOpacity : systemButtonOpacity;
+    }
+  }]);
+  return Button;
+}(_react.Component);
+
+Button.propTypes = babelHelpers.extends({}, _reactNative.TouchableOpacity.propTypes, {
+  allowFontScaling: _reactNative.Text.propTypes.allowFontScaling,
+  containerStyle: _reactNative.ViewPropTypes.style,
+  disabled: _react.PropTypes.bool,
+  style: _reactNative.Text.propTypes.style,
+  styleDisabled: _reactNative.Text.propTypes.style
+});
+exports.default = Button;
+;
+
+var styles = _reactNative.StyleSheet.create({
+  text: {
+    color: '#007aff',
+    fontSize: 17,
+    fontWeight: '500',
+    textAlign: 'center'
+  },
+  disabledText: {
+    color: '#dcdcdc'
+  },
+  group: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
+});
+}, 592, null, "react-native-button/Button.js");
+__d(/* react-native-button/coalesceNonElementChildren.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = coalesceNonElementChildren;
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+function coalesceNonElementChildren(children, coalesceNodes) {
+  var coalescedChildren = [];
+
+  var contiguousNonElements = [];
+  _react.Children.forEach(children, function (child) {
+    if (!_react2.default.isValidElement(child)) {
+      contiguousNonElements.push(child);
+      return;
+    }
+
+    if (contiguousNonElements.length) {
+      coalescedChildren.push(coalesceNodes(contiguousNonElements, coalescedChildren.length));
+      contiguousNonElements = [];
+    }
+
+    coalescedChildren.push(child);
+  });
+
+  if (contiguousNonElements.length) {
+    coalescedChildren.push(coalesceNodes(contiguousNonElements, coalescedChildren.length));
+  }
+
+  return coalescedChildren;
+}
+}, 593, null, "react-native-button/coalesceNonElementChildren.js");
+__d(/* reactDemo2/app/common/request.js */function(global, require, module, exports) {var _queryString = require(595           ); // 595 = query-string
 
 var _queryString2 = babelHelpers.interopRequireDefault(_queryString);
 
-var _mockjs = require(595     ); // 595 = mockjs
+var _mockjs = require(597     ); // 597 = mockjs
 
 var _mockjs2 = babelHelpers.interopRequireDefault(_mockjs);
 
-var config = require(596          ); // 596 = ./config.js
+var config = require(598          ); // 598 = ./config.js
 
 var request = {};
 
@@ -53495,10 +54264,10 @@ request.post = function (url, body) {
 };
 
 module.exports = request;
-}, 592, null, "reactDemo2/app/common/request.js");
+}, 594, null, "reactDemo2/app/common/request.js");
 __d(/* query-string/index.js */function(global, require, module, exports) {'use strict';
 
-var strictUriEncode = require(594                ); // 594 = strict-uri-encode
+var strictUriEncode = require(596                ); // 596 = strict-uri-encode
 var objectAssign = require(16             ); // 16 = object-assign
 
 function encoderForArrayFormat(opts) {
@@ -53677,7 +54446,7 @@ exports.stringify = function (obj, opts) {
 		return x.length > 0;
 	}).join('&') : '';
 };
-}, 593, null, "query-string/index.js");
+}, 595, null, "query-string/index.js");
 __d(/* strict-uri-encode/index.js */function(global, require, module, exports) {'use strict';
 
 module.exports = function (str) {
@@ -53685,7 +54454,7 @@ module.exports = function (str) {
 		return '%' + c.charCodeAt(0).toString(16).toUpperCase();
 	});
 };
-}, 594, null, "strict-uri-encode/index.js");
+}, 596, null, "strict-uri-encode/index.js");
 __d(/* mockjs/dist/mock.js */function(global, require, module, exports) {(function webpackUniversalModuleDefinition(root, factory) {
 	if (typeof exports === 'object' && typeof module === 'object') module.exports = factory();else if (typeof define === 'function' && define.amd) define([], factory);else if (typeof exports === 'object') exports["Mock"] = factory();else root["Mock"] = factory();
 })(this, function () {
@@ -58312,7 +59081,7 @@ __d(/* mockjs/dist/mock.js */function(global, require, module, exports) {(functi
 			"532329": "武定县",
 			"532331": "禄丰县",
 			"532332": "其它区",
-			"532500": "��河哈尼族彝族自治州",
+			"532500": "红河哈尼族彝族自治州",
 			"532501": "个旧市",
 			"532502": "开远市",
 			"532522": "蒙自市",
@@ -60997,7 +61766,7 @@ __d(/* mockjs/dist/mock.js */function(global, require, module, exports) {(functi
 	}]);
 });
 ;
-}, 595, null, "mockjs/dist/mock.js");
+}, 597, null, "mockjs/dist/mock.js");
 __d(/* reactDemo2/app/common/config.js */function(global, require, module, exports) {var config = {
     host: 'http://rapapi.org/mockjs/20782',
     api: {
@@ -61015,385 +61784,7 @@ __d(/* reactDemo2/app/common/config.js */function(global, require, module, expor
 };
 
 module.exports = config;
-}, 596, null, "reactDemo2/app/common/config.js");
-__d(/* react-native-video/Video.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _jsxFileName = '/Users/leo/work/reactDemo2/node_modules/react-native-video/Video.js';
-
-var _react = require(12     ); // 12 = react
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _reactNative = require(45            ); // 45 = react-native
-
-var _resolveAssetSource = require(275                                              ); // 275 = react-native/Libraries/Image/resolveAssetSource
-
-var _resolveAssetSource2 = babelHelpers.interopRequireDefault(_resolveAssetSource);
-
-var _VideoResizeMode = require(590                   ); // 590 = ./VideoResizeMode.js
-
-var _VideoResizeMode2 = babelHelpers.interopRequireDefault(_VideoResizeMode);
-
-var styles = _reactNative.StyleSheet.create({
-  base: {
-    overflow: 'hidden'
-  }
-});
-
-var Video = function (_Component) {
-  babelHelpers.inherits(Video, _Component);
-
-  function Video(props) {
-    babelHelpers.classCallCheck(this, Video);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, (Video.__proto__ || Object.getPrototypeOf(Video)).call(this, props));
-
-    _this.seek = function (time) {
-      _this.setNativeProps({ seek: time });
-    };
-
-    _this.presentFullscreenPlayer = function () {
-      _this.setNativeProps({ fullscreen: true });
-    };
-
-    _this.dismissFullscreenPlayer = function () {
-      _this.setNativeProps({ fullscreen: false });
-    };
-
-    _this._assignRoot = function (component) {
-      _this._root = component;
-    };
-
-    _this._onLoadStart = function (event) {
-      if (_this.props.onLoadStart) {
-        _this.props.onLoadStart(event.nativeEvent);
-      }
-    };
-
-    _this._onLoad = function (event) {
-      if (_this.props.onLoad) {
-        _this.props.onLoad(event.nativeEvent);
-      }
-    };
-
-    _this._onError = function (event) {
-      if (_this.props.onError) {
-        _this.props.onError(event.nativeEvent);
-      }
-    };
-
-    _this._onProgress = function (event) {
-      if (_this.props.onProgress) {
-        _this.props.onProgress(event.nativeEvent);
-      }
-    };
-
-    _this._onSeek = function (event) {
-      if (_this.state.showPoster) {
-        _this.setState({ showPoster: false });
-      }
-
-      if (_this.props.onSeek) {
-        _this.props.onSeek(event.nativeEvent);
-      }
-    };
-
-    _this._onEnd = function (event) {
-      if (_this.props.onEnd) {
-        _this.props.onEnd(event.nativeEvent);
-      }
-    };
-
-    _this._onFullscreenPlayerWillPresent = function (event) {
-      if (_this.props.onFullscreenPlayerWillPresent) {
-        _this.props.onFullscreenPlayerWillPresent(event.nativeEvent);
-      }
-    };
-
-    _this._onFullscreenPlayerDidPresent = function (event) {
-      if (_this.props.onFullscreenPlayerDidPresent) {
-        _this.props.onFullscreenPlayerDidPresent(event.nativeEvent);
-      }
-    };
-
-    _this._onFullscreenPlayerWillDismiss = function (event) {
-      if (_this.props.onFullscreenPlayerWillDismiss) {
-        _this.props.onFullscreenPlayerWillDismiss(event.nativeEvent);
-      }
-    };
-
-    _this._onFullscreenPlayerDidDismiss = function (event) {
-      if (_this.props.onFullscreenPlayerDidDismiss) {
-        _this.props.onFullscreenPlayerDidDismiss(event.nativeEvent);
-      }
-    };
-
-    _this._onReadyForDisplay = function (event) {
-      if (_this.props.onReadyForDisplay) {
-        _this.props.onReadyForDisplay(event.nativeEvent);
-      }
-    };
-
-    _this._onPlaybackStalled = function (event) {
-      if (_this.props.onPlaybackStalled) {
-        _this.props.onPlaybackStalled(event.nativeEvent);
-      }
-    };
-
-    _this._onPlaybackResume = function (event) {
-      if (_this.props.onPlaybackResume) {
-        _this.props.onPlaybackResume(event.nativeEvent);
-      }
-    };
-
-    _this._onPlaybackRateChange = function (event) {
-      if (_this.state.showPoster && event.nativeEvent.playbackRate !== 0) {
-        _this.setState({ showPoster: false });
-      }
-
-      if (_this.props.onPlaybackRateChange) {
-        _this.props.onPlaybackRateChange(event.nativeEvent);
-      }
-    };
-
-    _this._onAudioBecomingNoisy = function () {
-      if (_this.props.onAudioBecomingNoisy) {
-        _this.props.onAudioBecomingNoisy();
-      }
-    };
-
-    _this._onAudioFocusChanged = function (event) {
-      if (_this.props.onAudioFocusChanged) {
-        _this.props.onAudioFocusChanged(event.nativeEvent);
-      }
-    };
-
-    _this._onBuffer = function (event) {
-      if (_this.props.onBuffer) {
-        _this.props.onBuffer(event.nativeEvent);
-      }
-    };
-
-    _this.state = {
-      showPoster: true
-    };
-    return _this;
-  }
-
-  babelHelpers.createClass(Video, [{
-    key: 'setNativeProps',
-    value: function setNativeProps(nativeProps) {
-      this._root.setNativeProps(nativeProps);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var resizeMode = this.props.resizeMode;
-      var source = (0, _resolveAssetSource2.default)(this.props.source) || {};
-
-      var uri = source.uri || '';
-      if (uri && uri.match(/^\//)) {
-        uri = 'file://' + uri;
-      }
-
-      var isNetwork = !!(uri && uri.match(/^https?:/));
-      var isAsset = !!(uri && uri.match(/^(assets-library|file|content|ms-appx|ms-appdata):/));
-
-      var nativeResizeMode = void 0;
-      if (resizeMode === _VideoResizeMode2.default.stretch) {
-        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleToFill;
-      } else if (resizeMode === _VideoResizeMode2.default.contain) {
-        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleAspectFit;
-      } else if (resizeMode === _VideoResizeMode2.default.cover) {
-        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleAspectFill;
-      } else {
-        nativeResizeMode = _reactNative.NativeModules.UIManager.RCTVideo.Constants.ScaleNone;
-      }
-
-      var nativeProps = babelHelpers.extends({}, this.props);
-      babelHelpers.extends(nativeProps, {
-        style: [styles.base, nativeProps.style],
-        resizeMode: nativeResizeMode,
-        src: {
-          uri: uri,
-          isNetwork: isNetwork,
-          isAsset: isAsset,
-          type: source.type || '',
-          mainVer: source.mainVer || 0,
-          patchVer: source.patchVer || 0
-        },
-        onVideoLoadStart: this._onLoadStart,
-        onVideoLoad: this._onLoad,
-        onVideoError: this._onError,
-        onVideoProgress: this._onProgress,
-        onVideoSeek: this._onSeek,
-        onVideoEnd: this._onEnd,
-        onVideoBuffer: this._onBuffer,
-        onVideoFullscreenPlayerWillPresent: this._onFullscreenPlayerWillPresent,
-        onVideoFullscreenPlayerDidPresent: this._onFullscreenPlayerDidPresent,
-        onVideoFullscreenPlayerWillDismiss: this._onFullscreenPlayerWillDismiss,
-        onVideoFullscreenPlayerDidDismiss: this._onFullscreenPlayerDidDismiss,
-        onReadyForDisplay: this._onReadyForDisplay,
-        onPlaybackStalled: this._onPlaybackStalled,
-        onPlaybackResume: this._onPlaybackResume,
-        onPlaybackRateChange: this._onPlaybackRateChange,
-        onAudioFocusChanged: this._onAudioFocusChanged,
-        onAudioBecomingNoisy: this._onAudioBecomingNoisy
-      });
-
-      if (this.props.poster && this.state.showPoster) {
-        var posterStyle = {
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0,
-          resizeMode: 'contain'
-        };
-
-        return _react2.default.createElement(
-          _reactNative.View,
-          { style: nativeProps.style, __source: {
-              fileName: _jsxFileName,
-              lineNumber: 217
-            }
-          },
-          _react2.default.createElement(RCTVideo, babelHelpers.extends({
-            ref: this._assignRoot
-          }, nativeProps, {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 218
-            }
-          })),
-          _react2.default.createElement(_reactNative.Image, {
-            style: posterStyle,
-            source: { uri: this.props.poster },
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 222
-            }
-          })
-        );
-      }
-
-      return _react2.default.createElement(RCTVideo, babelHelpers.extends({
-        ref: this._assignRoot
-      }, nativeProps, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 231
-        }
-      }));
-    }
-  }]);
-  return Video;
-}(_react.Component);
-
-exports.default = Video;
-
-
-Video.propTypes = babelHelpers.extends({
-  src: _react.PropTypes.object,
-  seek: _react.PropTypes.number,
-  fullscreen: _react.PropTypes.bool,
-  onVideoLoadStart: _react.PropTypes.func,
-  onVideoLoad: _react.PropTypes.func,
-  onVideoBuffer: _react.PropTypes.func,
-  onVideoError: _react.PropTypes.func,
-  onVideoProgress: _react.PropTypes.func,
-  onVideoSeek: _react.PropTypes.func,
-  onVideoEnd: _react.PropTypes.func,
-  onVideoFullscreenPlayerWillPresent: _react.PropTypes.func,
-  onVideoFullscreenPlayerDidPresent: _react.PropTypes.func,
-  onVideoFullscreenPlayerWillDismiss: _react.PropTypes.func,
-  onVideoFullscreenPlayerDidDismiss: _react.PropTypes.func,
-
-  source: _react.PropTypes.oneOfType([_react.PropTypes.shape({
-    uri: _react.PropTypes.string
-  }), _react.PropTypes.number]),
-  resizeMode: _react.PropTypes.string,
-  poster: _react.PropTypes.string,
-  repeat: _react.PropTypes.bool,
-  paused: _react.PropTypes.bool,
-  muted: _react.PropTypes.bool,
-  volume: _react.PropTypes.number,
-  rate: _react.PropTypes.number,
-  playInBackground: _react.PropTypes.bool,
-  playWhenInactive: _react.PropTypes.bool,
-  disableFocus: _react.PropTypes.bool,
-  controls: _react.PropTypes.bool,
-  currentTime: _react.PropTypes.number,
-  progressUpdateInterval: _react.PropTypes.number,
-  onLoadStart: _react.PropTypes.func,
-  onLoad: _react.PropTypes.func,
-  onBuffer: _react.PropTypes.func,
-  onError: _react.PropTypes.func,
-  onProgress: _react.PropTypes.func,
-  onSeek: _react.PropTypes.func,
-  onEnd: _react.PropTypes.func,
-  onFullscreenPlayerWillPresent: _react.PropTypes.func,
-  onFullscreenPlayerDidPresent: _react.PropTypes.func,
-  onFullscreenPlayerWillDismiss: _react.PropTypes.func,
-  onFullscreenPlayerDidDismiss: _react.PropTypes.func,
-  onReadyForDisplay: _react.PropTypes.func,
-  onPlaybackStalled: _react.PropTypes.func,
-  onPlaybackResume: _react.PropTypes.func,
-  onPlaybackRateChange: _react.PropTypes.func,
-  onAudioFocusChanged: _react.PropTypes.func,
-  onAudioBecomingNoisy: _react.PropTypes.func,
-
-  scaleX: _react.PropTypes.number,
-  scaleY: _react.PropTypes.number,
-  translateX: _react.PropTypes.number,
-  translateY: _react.PropTypes.number,
-  rotation: _react.PropTypes.number
-}, _reactNative.View.propTypes);
-
-var RCTVideo = (0, _reactNative.requireNativeComponent)('RCTVideo', Video, {
-  nativeOnly: {
-    src: true,
-    seek: true,
-    fullscreen: true
-  }
-});
-}, 589, null, "react-native-video/Video.js");
-__d(/* react-native-video/VideoResizeMode.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _keymirror = require(591        ); // 591 = keymirror
-
-var _keymirror2 = babelHelpers.interopRequireDefault(_keymirror);
-
-exports.default = (0, _keymirror2.default)({
-  contain: null,
-  cover: null,
-  stretch: null
-});
-}, 590, null, "react-native-video/VideoResizeMode.js");
-__d(/* keymirror/index.js */function(global, require, module, exports) {
-
-"use strict";
-
-var keyMirror = function keyMirror(obj) {
-  var ret = {};
-  var key;
-  if (!(obj instanceof Object && !Array.isArray(obj))) {
-    throw new Error('keyMirror(...): Argument must be an object.');
-  }
-  for (key in obj) {
-    if (!obj.hasOwnProperty(key)) {
-      continue;
-    }
-    ret[key] = key;
-  }
-  return ret;
-};
-
-module.exports = keyMirror;
-}, 591, null, "keymirror/index.js");
+}, 598, null, "reactDemo2/app/common/config.js");
 __d(/* reactDemo2/app/edge/index.js */function(global, require, module, exports) {var _jsxFileName = '/Users/leo/work/reactDemo2/app/edge/index.js';
 var React = require(12     ); // 12 = react
 var ReactNative = require(45            ); // 45 = react-native
@@ -61444,7 +61835,7 @@ var styles = StyleSheet.create({
 });
 
 module.exports = Edit;
-}, 597, null, "reactDemo2/app/edge/index.js");
+}, 599, null, "reactDemo2/app/edge/index.js");
 __d(/* reactDemo2/app/account/index.js */function(global, require, module, exports) {var _jsxFileName = '/Users/leo/work/reactDemo2/app/account/index.js';
 var React = require(12     ); // 12 = react
 var ReactNative = require(45            ); // 45 = react-native
@@ -61487,7 +61878,7 @@ var styles = StyleSheet.create({
 });
 
 module.exports = Account;
-}, 598, null, "reactDemo2/app/account/index.js");
+}, 600, null, "reactDemo2/app/account/index.js");
 ;require(146);
 ;require(0);
 //# sourceMappingURL=index.ios.map

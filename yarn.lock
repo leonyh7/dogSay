@@ -2989,6 +2989,10 @@ react-devtools-core@^2.0.8:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-button@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/react-native-button/download/react-native-button-2.0.0.tgz#5b798f0ac8c9c5bfd495c7f5f308beb49ed40a4b"
+
 react-native-vector-icons@^4.2.0:
   version "4.2.0"
   resolved "http://registry.npm.taobao.org/react-native-vector-icons/download/react-native-vector-icons-4.2.0.tgz#0594b68debdd758dce4c565bf02e2d64d7004d82"

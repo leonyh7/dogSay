@@ -141,19 +141,17 @@ var List = React.createClass({
         cachedResults.items = items
         cachedResults.total = data.total
 
-        setTimeout(() => {
-          if (page !== 0) {
-            this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(cachedResults.items),
-              isLoadingTail: false
-            })
-          } else {
-            this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(cachedResults.items),
-              isRefreshing: false
-            })
-          }
-        }, 500)
+        if (page !== 0) {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(cachedResults.items),
+            isLoadingTail: false
+          })
+        } else {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(cachedResults.items),
+            isRefreshing: false
+          })
+        }
 
       }
     }).catch(error => {
