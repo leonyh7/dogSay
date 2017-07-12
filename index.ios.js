@@ -15,6 +15,7 @@ var Icon = require('react-native-vector-icons/Ionicons');
 var List = require('./app/creation/index');
 var Edit = require('./app/edge/index');
 var Account = require('./app/account/index');
+var Login = require('./app/account/login');
 
 var reactDemo2 = React.createClass({
   statics: {
@@ -26,7 +27,7 @@ var reactDemo2 = React.createClass({
 
   getInitialState: function () {
     return {
-      selectedTab: 'list'
+      selectedTab: 'account'
     };
   },
 
@@ -83,7 +84,8 @@ var reactDemo2 = React.createClass({
               selectedTab: 'account',
             });
           }}>
-          <Account></Account>
+          {/*<Account></Account>*/}
+          <Login></Login>
         </Icon.TabBarItem>
       </TabBarIOS>
     );

@@ -3,7 +3,9 @@ var config = {
     api: {
         creations: '/api/creations',
         up: '/api/up',
-        comment: '/api/comments'
+        comment: '/api/comments',
+        signup: '/api/u/signup',
+        verify: 'api/u/verify'
     },
     header: {
         method: 'POST',

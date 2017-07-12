@@ -2974,6 +2974,13 @@ raw-body@~2.1.2:
     iconv-lite "0.4.13"
     unpipe "1.0.0"
 
+react-addons-update@^15.6.0:
+  version "15.6.0"
+  resolved "http://registry.npm.taobao.org/react-addons-update/download/react-addons-update-15.6.0.tgz#67f8d5a3d3d8ac7ccfa452565a8310065178e748"
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.0"
+
 react-clone-referenced-element@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/react-clone-referenced-element/download/react-clone-referenced-element-1.0.1.tgz#2bba8c69404c5e4a944398600bcc4c941f860682"
@@ -2992,6 +2999,10 @@ react-devtools-core@^2.0.8:
 react-native-button@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/react-native-button/download/react-native-button-2.0.0.tgz#5b798f0ac8c9c5bfd495c7f5f308beb49ed40a4b"
+
+react-native-sk-countdown@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/react-native-sk-countdown/download/react-native-sk-countdown-1.0.1.tgz#e467bac16949060faa3a7c0db56d460ff8420451"
 
 react-native-vector-icons@^4.2.0:
   version "4.2.0"
